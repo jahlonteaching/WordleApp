@@ -10,9 +10,7 @@ import rc_main
 
 
 if __name__ == "__main__":
-
     sys.argv += ['--style', 'material']
-
     QQuickStyle.setStyle("Material")
     app = QGuiApplication(sys.argv)
     engine = QQmlApplicationEngine()

@@ -1,7 +1,7 @@
 import QtQuick 2.15
 
 Item {
-    id: item1
+    id: row
     width: 230
     height: 50
     Rectangle {
