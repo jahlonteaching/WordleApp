@@ -17,10 +17,10 @@ Window {
         for (var i=0; i<5; i++) {
             var newY = (50 * i) + 5;
             var row = component.createObject(window, {
-                                                 id: "row_" + i,
-                                                 y: newY,
-                                                 "anchors.horizontalCenter": "parent.horizontalCenter"
-                                             });
+                                                id: "row_" + i,
+                                                y: newY,
+                                                "anchors.horizontalCenter": "parent.horizontalCenter"
+                                            });
         }
     }
 
