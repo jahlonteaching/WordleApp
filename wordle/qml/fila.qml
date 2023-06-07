@@ -1,9 +1,10 @@
 import QtQuick 2.15
 
-Item {
+Rectangle {
     id: row
     width: 230
     height: 50
+    color: "#2015ff"
     Rectangle {
         id: rect_1
         x: 21

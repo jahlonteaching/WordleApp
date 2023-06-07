@@ -1,3 +1,3 @@
 {
-    "files": ["ventana.qml","rc_main.qrc","main.py","qtquickcontrols2.conf"]
+    "files": ["ventana.qml","rc_main.qrc","main.py","qtquickcontrols2.conf","fila.qml"]
 }

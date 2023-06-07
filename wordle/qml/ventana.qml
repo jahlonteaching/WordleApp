@@ -5,7 +5,7 @@ import QtQuick.Controls 2.15
 Window {
     id: window
     width: 240
-    height: 280
+    height: 300
     visible: true
     title: qsTr("Wordle App")
     flags: Qt.WindowTitleHint | Qt.CustomizeWindowHint
@@ -17,11 +17,29 @@ Window {
         for (var i=0; i<5; i++) {
             var newY = (50 * i) + 5;
             var row = component.createObject(window, {
-                                                id: "row_" + i,
                                                 y: newY,
-                                                "anchors.horizontalCenter": "parent.horizontalCenter"
-                                            });
+                                                x: 5,
+                                                "anchors.horizontalCenter": window.horizontalCenter,
+                                                "anchors.horizontalCenterOffset": 0
+                                             });
+            row.objectName = "row_" + (i+1);
         }
+    }
+
+    Text {
+        id: text_msg
+        y: 265
+        width: 217
+        height: 25
+        text: qsTr("Felicitaciones!")
+        anchors.bottom: parent.bottom
+        font.pixelSize: 16
+        horizontalAlignment: Text.AlignHCenter
+        verticalAlignment: Text.AlignVCenter
+        anchors.horizontalCenterOffset: 0
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.bottomMargin: 10
+        font.weight: Font.Bold
     }
 
 }
