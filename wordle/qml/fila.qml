@@ -1,10 +1,52 @@
 import QtQuick 2.15
 
-Rectangle {
+Item {
     id: row
     width: 230
     height: 50
-    color: "#2015ff"
+    // color: "#2015ff"
+    property int actual_rect: 1
+    focus: true
+    Keys.onPressed: (event) => {
+        if (event.key >= Qt.Key_A && event.key <= Qt.Key_Z) {
+            if(actual_rect < 6) {
+                set_letter_text(actual_rect, event.text);
+                actual_rect++;
+            }
+        }
+    }
+
+    Keys.onBackPressed: (event) => {
+        if(actual_rect > 1) {
+            set_letter_text(actual_rect, "");
+            actual_rect--;
+        }
+    }
+
+    Keys.onEnterPressed: (event) => {
+        if(actual_rect > 5){
+            set_letter_text(actual_rect-1, "0")
+        }
+    }
+
+    function set_letter_text(pos, text) {
+        if(pos === 1){
+            text_letter_1.text = text.toUpperCase()
+        }
+        if(pos === 2){
+            text_letter_2.text = text.toUpperCase()
+        }
+        if(pos === 3){
+            text_letter_3.text = text.toUpperCase()
+        }
+        if(pos === 4){
+            text_letter_4.text = text.toUpperCase()
+        }
+        if(pos === 5){
+            text_letter_5.text = text.toUpperCase()
+        }
+    }
+
     Rectangle {
         id: rect_1
         x: 21
@@ -19,11 +61,14 @@ Rectangle {
         TextInput {
             id: text_letter_1
             y: 30
-            text: qsTr("X")
+            text: qsTr("")
             anchors.fill: parent
             font.pixelSize: 25
             horizontalAlignment: Text.AlignHCenter
             verticalAlignment: Text.AlignVCenter
+            autoScroll: false
+            activeFocusOnPress: false
+            readOnly: true
             antialiasing: true
             maximumLength: 1
             font.weight: Font.Bold
@@ -43,11 +88,14 @@ Rectangle {
         TextInput {
             id: text_letter_2
             y: 30
-            text: qsTr("X")
+            text: qsTr("")
             anchors.fill: parent
             font.pixelSize: 25
             horizontalAlignment: Text.AlignHCenter
             verticalAlignment: Text.AlignVCenter
+            autoScroll: false
+            activeFocusOnPress: false
+            readOnly: true
             maximumLength: 1
             antialiasing: true
             font.weight: Font.Bold
@@ -66,11 +114,14 @@ Rectangle {
         TextInput {
             id: text_letter_3
             y: 30
-            text: qsTr("X")
+            text: qsTr("")
             anchors.fill: parent
             font.pixelSize: 25
             horizontalAlignment: Text.AlignHCenter
             verticalAlignment: Text.AlignVCenter
+            autoScroll: false
+            activeFocusOnPress: false
+            readOnly: true
             maximumLength: 1
             antialiasing: true
             font.weight: Font.Bold
@@ -89,11 +140,14 @@ Rectangle {
         TextInput {
             id: text_letter_4
             y: 30
-            text: qsTr("X")
+            text: qsTr("")
             anchors.fill: parent
             font.pixelSize: 25
             horizontalAlignment: Text.AlignHCenter
             verticalAlignment: Text.AlignVCenter
+            autoScroll: false
+            activeFocusOnPress: false
+            readOnly: true
             anchors.rightMargin: -1
             anchors.bottomMargin: 0
             anchors.leftMargin: 1
@@ -116,11 +170,14 @@ Rectangle {
         TextInput {
             id: text_letter_5
             y: 30
-            text: qsTr("X")
+            text: qsTr("")
             anchors.fill: parent
             font.pixelSize: 25
             horizontalAlignment: Text.AlignHCenter
             verticalAlignment: Text.AlignVCenter
+            autoScroll: false
+            activeFocusOnPress: false
+            readOnly: true
             maximumLength: 1
             antialiasing: true
             font.weight: Font.Bold

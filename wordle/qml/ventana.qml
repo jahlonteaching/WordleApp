@@ -11,6 +11,7 @@ Window {
     flags: Qt.WindowTitleHint | Qt.CustomizeWindowHint
            | Qt.WindowMinimizeButtonHint | Qt.WindowCloseButtonHint
            | Qt.MSWindowsFixedSizeDialogHint
+    property Item active_row;
 
     Component.onCompleted: {
         var component = Qt.createComponent("fila.qml");
@@ -23,7 +24,11 @@ Window {
                                                 "anchors.horizontalCenterOffset": 0
                                              });
             row.objectName = "row_" + (i+1);
+            if(i == 0) {
+                active_row = row;
+            }
         }
+        window.activeFocusItem = active_row;
     }
 
     Text {
