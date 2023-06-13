@@ -7,25 +7,34 @@ Item {
     // color: "#2015ff"
     property int actual_rect: 1
     focus: true
+
     Keys.onPressed: (event) => {
         if (event.key >= Qt.Key_A && event.key <= Qt.Key_Z) {
             if(actual_rect < 6) {
                 set_letter_text(actual_rect, event.text);
+                event.accepted = true;
                 actual_rect++;
+            }
+        } else if(event.key === Qt.Key_Backspace){
+            if(actual_rect > 1) {
+                actual_rect--;
+                set_letter_text(actual_rect, "");
+                event.accepted = true;
             }
         }
     }
 
-    Keys.onBackPressed: (event) => {
-        if(actual_rect > 1) {
-            set_letter_text(actual_rect, "");
-            actual_rect--;
-        }
-    }
-
-    Keys.onEnterPressed: (event) => {
+    Keys.onReturnPressed: (event) => {
         if(actual_rect > 5){
-            set_letter_text(actual_rect-1, "0")
+            window.active_row_index++;
+            if(window.active_row_index < 6) {
+                var row_name = "row_" + window.active_row_index;
+                var row = findChild(row_name);
+                if(row !== null) {
+                    window.active_row = row;
+                    window.active_row.focus = true;
+                }
+            }
         }
     }
 

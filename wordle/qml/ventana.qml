@@ -12,6 +12,7 @@ Window {
            | Qt.WindowMinimizeButtonHint | Qt.WindowCloseButtonHint
            | Qt.MSWindowsFixedSizeDialogHint
     property Item active_row;
+    property int active_row_index: 1;
 
     Component.onCompleted: {
         var component = Qt.createComponent("fila.qml");
@@ -26,9 +27,20 @@ Window {
             row.objectName = "row_" + (i+1);
             if(i == 0) {
                 active_row = row;
+                active_row_index = 1
             }
         }
-        window.activeFocusItem = active_row;
+        active_row.focus = true;
+    }
+
+    function findChild(objectName) {
+        for(var i=0; i < window.contentItem.children.length; i++) {
+            var item = window.contentItem.children[i];
+            if(item.objectName === objectName) {
+                return item;
+            }
+        }
+        return null;
     }
 
     Text {
