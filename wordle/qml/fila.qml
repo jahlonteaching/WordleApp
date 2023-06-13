@@ -9,7 +9,7 @@ Item {
     focus: true
 
     Keys.onPressed: (event) => {
-        if (event.key >= Qt.Key_A && event.key <= Qt.Key_Z) {
+        if ( (event.key >= Qt.Key_A && event.key <= Qt.Key_Z) || event.key === 209) {
             if(actual_rect < 6) {
                 set_letter_text(actual_rect, event.text);
                 event.accepted = true;
@@ -25,17 +25,61 @@ Item {
     }
 
     Keys.onReturnPressed: (event) => {
-        if(actual_rect > 5){
+        if(actual_rect > 5 && window.active_row_index < 6){
+            var word = get_word();
+            var result = controller.verificar_palabra(get_word());
+            paint_letters(result);
             window.active_row_index++;
-            if(window.active_row_index < 6) {
-                var row_name = "row_" + window.active_row_index;
-                var row = findChild(row_name);
-                if(row !== null) {
-                    window.active_row = row;
-                    window.active_row.focus = true;
-                }
+            var row_name = "row_" + window.active_row_index;
+            var row = findChild(row_name);
+            if(row !== null) {
+                window.active_row = row;
+                window.active_row.focus = true;
             }
+
         }
+    }
+
+    function paint_letters(result) {
+        for(var i=0; i < result.length; i++) {
+            paint_text_letter(i+1, result[i]);
+        }
+    }
+
+    function paint_text_letter(pos, result) {
+
+        var color = "#FFFFFF";
+        if(result === 2) {
+            color = "#FFFC3C";
+        } else if(result === 1) {
+            color = "#20FF1B";
+        }
+
+        if(pos === 1){
+            rect_1.color = color
+        }
+        if(pos === 2){
+            rect_2.color = color
+        }
+        if(pos === 3){
+            rect_3.color = color
+        }
+        if(pos === 4){
+            rect_4.color = color
+        }
+        if(pos === 5){
+            rect_5.color = color
+        }
+    }
+
+    function get_word() {
+        var word = "";
+        word += text_letter_1.text;
+        word += text_letter_2.text;
+        word += text_letter_3.text;
+        word += text_letter_4.text;
+        word += text_letter_5.text;
+        return word;
     }
 
     function set_letter_text(pos, text) {

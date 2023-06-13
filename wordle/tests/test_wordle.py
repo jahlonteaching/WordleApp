@@ -7,7 +7,8 @@ from wordle.modelo.wordle import Wordle
     ("LARGA", "AVENA", [2, 0, 0, 0, 1]),
     ("LARGA", "FALLA", [0, 1, 2, 0, 1]),
     ("LARGA", "LEGAL", [1, 0, 2, 2, 0]),
-    ("LARGA", "ATACA", [2, 0, 0, 0, 1])
+    ("LARGA", "ATACA", [2, 0, 0, 0, 1]),
+    ("LARGA", "RADIO", [2, 1, 0, 0, 0])
 ])
 def test_wordle_marca_casilla_bien(palabra_secreta, palabra, resultado):
     wordle = Wordle()

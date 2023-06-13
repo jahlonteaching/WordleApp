@@ -52,6 +52,8 @@ class Palabra:
                 if not self._contiene_letra_en(i, letra):
                     resultado[i] = Resultado.POSICION_INCORRECTA.value
 
+        self._init_frecuencias(self.palabra_secreta)
+
         return resultado
 
 

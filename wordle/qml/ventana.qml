@@ -31,7 +31,10 @@ Window {
             }
         }
         active_row.focus = true;
+        controller.iniciar_juego();
     }
+
+
 
     function findChild(objectName) {
         for(var i=0; i < window.contentItem.children.length; i++) {
