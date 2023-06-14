@@ -1,7 +1,8 @@
 from enum import Enum
+import random
 from typing import Optional
 
-from wordle.modelo.errores import LongitudDePalabraIncorrectaError
+from wordle.modelo.errores import LongitudDePalabraIncorrectaError, PalabraNoExistenteError
 
 
 class Resultado(Enum):
@@ -16,6 +17,7 @@ class Palabra:
         if len(palabra_secreta) != 5:
             raise LongitudDePalabraIncorrectaError(f"{palabra_secreta} no es una palabra de 5 letras")
 
+        print(f"PALABRA SECRETA: {palabra_secreta}")
         self.palabra_secreta: str = palabra_secreta
         self._frecuencias: dict[str, int] = {}
         self._init_frecuencias(palabra_secreta)
@@ -62,6 +64,7 @@ class Wordle:
     MAX_INTENTOS: int = 6
 
     def __init__(self):
+        self.palabras: list[str] = []
         self.intentos: int = 0
         self.palabra: Optional[Palabra] = None
 
@@ -73,14 +76,26 @@ class Wordle:
             self.palabra = Palabra(palabra_secreta)
 
     def obtener_palabra_secreta(self) -> str:
-        return "LARGA"
+        if len(self.palabras) == 0:
+            with open("assets/5_letter_words.txt", mode='r', encoding='utf8') as file:
+                self.palabras = file.readlines()
+            
+            self.palabras = [word.strip().upper() for word in self.palabras]
+        
+        return random.choice(self.palabras)
 
     def intentar_palabra(self, palabra: str):
-        self.intentos += 1
-        return self.palabra.verificar_palabra(palabra)
+        if self.palabra_en_base_de_datos(palabra):
+            self.intentos += 1
+            return self.palabra.verificar_palabra(palabra)
+        else:
+            raise PalabraNoExistenteError(f"{palabra} \n no es existe en la base de datos")
+
+    def palabra_en_base_de_datos(self, palabra):
+        return palabra in self.palabras
 
     def descubrio_palabra(self, resultado):
-        return all([item == Resultado.POSICION_CORRECTA for item in resultado])
+        return all([item == Resultado.POSICION_CORRECTA.value for item in resultado])
 
     def tiene_intentos(self):
         return self.intentos < Wordle.MAX_INTENTOS

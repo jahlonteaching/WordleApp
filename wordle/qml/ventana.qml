@@ -5,7 +5,7 @@ import QtQuick.Controls 2.15
 Window {
     id: window
     width: 240
-    height: 300
+    height: 350
     visible: true
     title: qsTr("Wordle App")
     flags: Qt.WindowTitleHint | Qt.CustomizeWindowHint
@@ -13,10 +13,11 @@ Window {
            | Qt.MSWindowsFixedSizeDialogHint
     property Item active_row;
     property int active_row_index: 1;
+    property bool finished: false;
 
     Component.onCompleted: {
         var component = Qt.createComponent("fila.qml");
-        for (var i=0; i<5; i++) {
+        for (var i=0; i<6; i++) {
             var newY = (50 * i) + 5;
             var row = component.createObject(window, {
                                                 y: newY,
@@ -34,8 +35,6 @@ Window {
         controller.iniciar_juego();
     }
 
-
-
     function findChild(objectName) {
         for(var i=0; i < window.contentItem.children.length; i++) {
             var item = window.contentItem.children[i];
@@ -46,12 +45,21 @@ Window {
         return null;
     }
 
+    function set_message(msg) {
+        text_msg.text = msg
+    }
+
+    function show_popup(msg) {
+        popup.contentItem.text = msg
+        popup.open()
+    }
+
     Text {
         id: text_msg
         y: 265
         width: 217
         height: 25
-        text: qsTr("Felicitaciones!")
+        text: qsTr("")
         anchors.bottom: parent.bottom
         font.pixelSize: 16
         horizontalAlignment: Text.AlignHCenter
@@ -60,6 +68,26 @@ Window {
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.bottomMargin: 10
         font.weight: Font.Bold
+    }
+
+    Popup {
+        id: popup
+        anchors.centerIn: Overlay.overlay
+        width: 200
+        height: 50
+        modal: true
+        focus: true
+        closePolicy: Popup.CloseOnEscape | Popup.CloseOnPressOutsideParent
+
+        contentItem: Text {
+            id: message
+            text: ""
+            horizontalAlignment: Text.AlignHCenter
+        }
+
+        onClosed: {
+            window.active_row.focus = true;
+        }
     }
 
 }

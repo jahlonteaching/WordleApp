@@ -1,6 +1,14 @@
 class WordleError(Exception):
-    pass
+    def __init__(self, message: str) -> None:
+        super().__init__(message)
+        self.message = message
 
 
 class LongitudDePalabraIncorrectaError(WordleError):
-    pass
+    def __init__(self, message: str) -> None:
+        super().__init__(message)
+
+
+class PalabraNoExistenteError(WordleError):
+    def __init__(self, message: str) -> None:
+        super().__init__(message)

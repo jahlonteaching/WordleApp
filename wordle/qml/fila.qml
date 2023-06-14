@@ -4,39 +4,58 @@ Item {
     id: row
     width: 230
     height: 50
-    // color: "#2015ff"
     property int actual_rect: 1
     focus: true
 
     Keys.onPressed: (event) => {
-        if ( (event.key >= Qt.Key_A && event.key <= Qt.Key_Z) || event.key === 209) {
-            if(actual_rect < 6) {
-                set_letter_text(actual_rect, event.text);
-                event.accepted = true;
-                actual_rect++;
-            }
-        } else if(event.key === Qt.Key_Backspace){
-            if(actual_rect > 1) {
-                actual_rect--;
-                set_letter_text(actual_rect, "");
-                event.accepted = true;
+        if(!window.finished) {
+            if ( (event.key >= Qt.Key_A && event.key <= Qt.Key_Z) || event.key === 209) {
+                if(actual_rect < 6) {
+                    set_letter_text(actual_rect, event.text);
+                    event.accepted = true;
+                    actual_rect++;
+                }
+            } else if(event.key === Qt.Key_Backspace){
+                if(actual_rect > 1) {
+                    actual_rect--;
+                    set_letter_text(actual_rect, "");
+                    event.accepted = true;
+                }
             }
         }
     }
 
     Keys.onReturnPressed: (event) => {
-        if(actual_rect > 5 && window.active_row_index < 6){
+        if(!window.finished && actual_rect > 5 && window.active_row_index < 7){
+            // Verify result and paint letters
             var word = get_word();
-            var result = controller.verificar_palabra(get_word());
-            paint_letters(result);
-            window.active_row_index++;
-            var row_name = "row_" + window.active_row_index;
-            var row = findChild(row_name);
-            if(row !== null) {
-                window.active_row = row;
-                window.active_row.focus = true;
-            }
+            var response = JSON.parse(controller.verificar_palabra(get_word()));
+            if(response["estado"] === "OK") {
+                paint_letters(response["resultado"]);
 
+                print(JSON.stringify(response));
+
+                // Go to the next row
+                if(!response["descubrio_palabra"]) {
+                    if(response["tiene_intentos"]) {
+                        window.active_row_index++;
+                        var row_name = "row_" + window.active_row_index;
+                        var row = findChild(row_name);
+                        if(row !== null) {
+                            window.active_row = row;
+                            window.active_row.focus = true;
+                        }
+                    } else {
+                        window.finished = true;
+                        set_message("¡Lo siento, has perdido!");
+                    }
+                } else {
+                    window.finished = true;
+                    set_message("¡Felicitaciones!");
+                }
+            } else {
+                show_popup(response["mensaje_error"]);
+            }
         }
     }
 
@@ -48,7 +67,7 @@ Item {
 
     function paint_text_letter(pos, result) {
 
-        var color = "#FFFFFF";
+        var color = "#ADA9A9";
         if(result === 2) {
             color = "#FFFC3C";
         } else if(result === 1) {

@@ -17,3 +17,17 @@ def test_wordle_marca_casilla_bien(palabra_secreta, palabra, resultado):
     resultado_wordle = wordle.intentar_palabra(palabra)
 
     assert resultado_wordle == resultado
+
+
+@pytest.mark.parametrize("palabra_secreta, palabra, esperado", [
+    ("LARGA", "AVENA", False),
+    ("LARGA", "LARGO", False),
+    ("LARGA", "LARGA", True)
+])
+def test_descubrio_palabra(palabra_secreta, palabra, esperado):
+    wordle = Wordle()
+    wordle.iniciar_nuevo_juego(palabra_secreta=palabra_secreta)
+
+    resultado = wordle.intentar_palabra(palabra)
+
+    assert wordle.descubrio_palabra(resultado) == esperado
