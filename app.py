@@ -25,7 +25,7 @@ if __name__ == "__main__":
     engine.rootContext().setContextProperty("controller", controller)
 
     # Load QML file for main window
-    qml_file = Path(__file__).resolve().parent / "qml/ventana.qml"
+    qml_file = Path(__file__).resolve().parent / "wordle/qml/ventana.qml"
     engine.load(qml_file)
 
     if not engine.rootObjects():
