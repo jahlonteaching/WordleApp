@@ -28,5 +28,12 @@ class WordleController(QObject):
             respuesta["resultado"] = resultado
             respuesta["tiene_intentos"] = self.wordle.tiene_intentos()
             respuesta["descubrio_palabra"] = self.wordle.descubrio_palabra(resultado)
+            if not self.wordle.tiene_intentos():
+                respuesta["palabra_secreta"] = self.wordle.palabra.palabra_secreta
 
         return json.dumps(respuesta)
+    
+    @Slot(result=str)
+    def consultar_definicion(self) -> str:
+        respuesta = f"<b>{self.wordle.palabra.palabra_secreta}</b> <br>{self.wordle.palabra.definicion}"
+        return respuesta

@@ -1,8 +1,17 @@
-from enum import Enum
 import random
+import requests
+
+from enum import Enum
 from typing import Optional
 
 from wordle.modelo.errores import LongitudDePalabraIncorrectaError, PalabraNoExistenteError
+
+
+url = "https://lexicala1.p.rapidapi.com/search-entries"
+headers = {
+	"X-RapidAPI-Key": "bd189fe007msh7b7d1559c09a2e5p1d7ab2jsn6c1815d8c49e",
+	"X-RapidAPI-Host": "lexicala1.p.rapidapi.com"
+}
 
 
 class Resultado(Enum):
@@ -17,8 +26,10 @@ class Palabra:
         if len(palabra_secreta) != 5:
             raise LongitudDePalabraIncorrectaError(f"{palabra_secreta} no es una palabra de 5 letras")
 
-        print(f"PALABRA SECRETA: {palabra_secreta}")
+        print(palabra_secreta)
+        
         self.palabra_secreta: str = palabra_secreta
+        self.__definicion: Optional[str] = None
         self._frecuencias: dict[str, int] = {}
         self._init_frecuencias(palabra_secreta)
 
@@ -57,6 +68,19 @@ class Palabra:
         self._init_frecuencias(self.palabra_secreta)
 
         return resultado
+    
+    @property
+    def definicion(self):
+        if self.__definicion is None:
+            querystring = {"text": self.palabra_secreta.lower(), "language": "es"}
+            response = requests.get(url, headers=headers, params=querystring)
+            data = response.json()
+            if data['n_results'] > 0:
+                self.__definicion = data['results'][0]['senses'][0]['definition']
+            else:
+                self.__definicion = "No se encotró una definición"
+        return self.__definicion
+        
 
 
 class Wordle:

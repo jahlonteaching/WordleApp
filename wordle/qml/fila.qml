@@ -33,8 +33,6 @@ Item {
             if(response["estado"] === "OK") {
                 paint_letters(response["resultado"]);
 
-                print(JSON.stringify(response));
-
                 // Go to the next row
                 if(!response["descubrio_palabra"]) {
                     if(response["tiene_intentos"]) {
@@ -47,11 +45,15 @@ Item {
                         }
                     } else {
                         window.finished = true;
-                        set_message("¡Lo siento, has perdido!");
+                        set_message("La palabra era: " + response['palabra_secreta']);
+                        new_game_button.enabled = true;
+                        definition_button.enabled = true;
                     }
                 } else {
                     window.finished = true;
                     set_message("¡Felicitaciones!");
+                    new_game_button.enabled = true;
+                    definition_button.enabled = true;
                 }
             } else {
                 show_popup(response["mensaje_error"]);
@@ -117,6 +119,22 @@ Item {
         if(pos === 5){
             text_letter_5.text = text.toUpperCase()
         }
+    }
+
+    function clear() {
+        text_letter_1.text = ""
+        text_letter_2.text = ""
+        text_letter_3.text = ""
+        text_letter_4.text = ""
+        text_letter_5.text = ""
+
+        rect_1.color = "#FFFFFF"
+        rect_2.color = "#FFFFFF"
+        rect_3.color = "#FFFFFF"
+        rect_4.color = "#FFFFFF"
+        rect_5.color = "#FFFFFF"
+
+        actual_rect = 1
     }
 
     Rectangle {
