@@ -74,7 +74,7 @@ Window {
         id: popup
         anchors.centerIn: Overlay.overlay
         width: 200
-        height: 50
+        // height: childrenRect.height
         modal: true
         focus: true
         closePolicy: Popup.CloseOnEscape | Popup.CloseOnPressOutsideParent
@@ -83,6 +83,7 @@ Window {
             id: message
             text: ""
             horizontalAlignment: Text.AlignHCenter
+            wrapMode: Text.WordWrap
         }
 
         onClosed: {
