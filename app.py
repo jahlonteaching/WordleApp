@@ -1,7 +1,7 @@
 import sys
 from pathlib import Path
 
-from PySide6.QtGui import QGuiApplication
+from PySide6.QtGui import QGuiApplication, QIcon
 from PySide6.QtQml import QQmlApplicationEngine
 from PySide6.QtQuickControls2 import QQuickStyle
 
@@ -16,6 +16,8 @@ if __name__ == "__main__":
     # Create QML app
     app = QGuiApplication(sys.argv)
     engine = QQmlApplicationEngine()
+    icon_file = Path(__file__).resolve().parent / "assets/word.png"
+    app.setWindowIcon(QIcon(str(icon_file)))
 
     # Create controller and model
     model = Wordle()

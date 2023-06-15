@@ -113,6 +113,12 @@ Window {
         display: AbstractButton.TextOnly
         flat: true
         enabled: false
+        
+        HoverHandler {
+            id: mouse_new_game
+            acceptedDevices: PointerDevice.Mouse
+            cursorShape: Qt.PointingHandCursor
+        }
 
         contentItem: Text {
             text: new_game_button.text
@@ -146,6 +152,12 @@ Window {
         display: AbstractButton.TextOnly
         flat: true
         enabled: false
+
+        HoverHandler {
+            id: mouse_definition
+            acceptedDevices: PointerDevice.Mouse
+            cursorShape: Qt.PointingHandCursor
+        }
 
         contentItem: Text {
             text: definition_button.text

@@ -25,8 +25,6 @@ class Palabra:
     def __init__(self, palabra_secreta: str):
         if len(palabra_secreta) != 5:
             raise LongitudDePalabraIncorrectaError(f"{palabra_secreta} no es una palabra de 5 letras")
-
-        print(palabra_secreta)
         
         self.palabra_secreta: str = palabra_secreta
         self.__definicion: Optional[str] = None
@@ -79,7 +77,7 @@ class Palabra:
             if data['n_results'] > 0:
                 self.__definicion = data['results'][0]['senses'][0]['definition']
             else:
-                self.__definicion = "No se encotró una definición"
+                self.__definicion = "No se encontró una definición"
         return self.__definicion
         
 
