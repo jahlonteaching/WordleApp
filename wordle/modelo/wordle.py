@@ -34,6 +34,7 @@ class Palabra:
         self._init_frecuencias(palabra_secreta)
 
     def _init_frecuencias(self, palabra):
+        self._frecuencias.clear()
         for letra in palabra:
             if letra not in self._frecuencias.keys():
                 self._frecuencias[letra] = 1
@@ -61,8 +62,8 @@ class Palabra:
 
         for i, letra in enumerate(palabra):
             if letra in self._frecuencias.keys() and self._frecuencias[letra] > 0:
-                self._frecuencias[letra] -= 1
                 if not self._contiene_letra_en(i, letra):
+                    self._frecuencias[letra] -= 1
                     resultado[i] = Resultado.POSICION_INCORRECTA.value
 
         self._init_frecuencias(self.palabra_secreta)

@@ -17,7 +17,8 @@ def wordle():
     ("LARGA", "ATACA", [2, 0, 0, 0, 1]),
     ("LARGA", "RADIO", [2, 1, 0, 0, 0]),
     ("RADIO", "AVENA", [2, 0, 0, 0, 0]),
-    ("PAJAR", "FALLA", [0, 1, 0, 0, 2])
+    ("PAJAR", "FALLA", [0, 1, 0, 0, 2]),
+    ("ERMAR", "MIMAR", [0, 0, 1, 1, 1]),
 ])
 def test_wordle_marca_casilla_bien(palabra_secreta, palabra, resultado, wordle):
     wordle.iniciar_nuevo_juego(palabra_secreta=palabra_secreta)
