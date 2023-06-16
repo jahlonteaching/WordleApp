@@ -76,21 +76,17 @@ Item {
             color = "#20FF1B";
         }
 
-        if(pos === 1){
-            rect_1.color = color
-        }
-        if(pos === 2){
-            rect_2.color = color
-        }
-        if(pos === 3){
-            rect_3.color = color
-        }
-        if(pos === 4){
-            rect_4.color = color
-        }
-        if(pos === 5){
-            rect_5.color = color
-        }
+        var rect = 'rect_' + pos
+        animate_color(rect, color, 500)
+    }
+
+    function animate_color(rect, to_color, duration) {
+        var str_object = `import QtQuick 2.15; ColorAnimation {target: ${rect}; property: 'color'; to: '${to_color}'; duration: ${duration}}`
+        var animation = Qt.createQmlObject(
+            str_object,
+            parent
+        )
+        animation.start()
     }
 
     function get_word() {
@@ -146,7 +142,6 @@ Item {
         border.width: 1
         anchors.verticalCenter: parent.verticalCenter
         antialiasing: true
-
 
         TextInput {
             id: text_letter_1
