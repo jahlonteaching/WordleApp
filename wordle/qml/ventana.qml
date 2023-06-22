@@ -49,7 +49,12 @@ Window {
         text_msg.text = msg
     }
 
-    function show_popup(msg) {
+    function show_popup(msg, centered=true) {
+        if(!centered) {
+            popup.contentItem.horizontalAlignment = Text.AlignLeft
+        } else {
+            popup.contentItem.horizontalAlignment = Text.AlignHCenter
+        }
         popup.contentItem.text = msg
         popup.open()
     }
@@ -185,12 +190,14 @@ Window {
             id: help_ma
             anchors.fill: parent
             hoverEnabled: true
+            cursorShape: Qt.PointingHandCursor
+
+            onClicked: show_help()
         }
 
         ToolTip {
             text: qsTr("Ver ayuda")
             visible: help_ma.containsMouse
-            anchors.centerIn: parent
         }
 
         HoverHandler {
@@ -198,6 +205,19 @@ Window {
             acceptedDevices: PointerDevice.Mouse
             cursorShape: Qt.PointingHandCursor
         }
+    }
+
+    function show_help() {
+        var help_msg = `<strong>Ayuda</strong><br>
+        <li><b>-</b>Ingresar palabra: escriba con el teclado y al finalizar presione la tecla <strong>Enter</strong>.</li>
+        <li><b>-</b>Borrar letra: Puede borrar las letras escritas presionando la tecla <strong>Back</strong> (retroceso).</li>
+        <li><b>-</b>Ver definición: Al finalizar el juego, de clic en el botón <u>Definición</u>. 
+        Aparece un cuadro con la definición. Para salir del cuadro, presione la tecla <strong>Esc</strong></li>
+        <li><b>-</b>Nuevo juego: al finalizar un juego, de clic en el botón <u>Nuevo juego</u></li>
+        <li><b>-</b>Ver ayuda: De clic en el ícono de ayuda. Aperece un cuadro con la ayuda. Para salir del cuadro, 
+        presione la tecla <strong>Esc</strong>.</li>
+        `
+        show_popup(help_msg, false)
     }
 
     function show_definition() {
