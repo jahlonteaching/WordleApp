@@ -139,7 +139,7 @@ Window {
         text: qsTr("Definición")
         anchors.left: parent.left
         anchors.bottom: parent.bottom
-        anchors.leftMargin: 12
+        anchors.leftMargin: 26
         font.pointSize: 9
         antialiasing: true
         font.underline: true
@@ -168,6 +168,36 @@ Window {
         }
 
         onClicked: show_definition()
+    }
+
+    Image {
+        id: help_image
+        x: 109
+        y: 346
+        width: 23
+        height: 22
+        source: "../../assets/help.png"
+        sourceSize.height: 16
+        sourceSize.width: 16
+        fillMode: Image.Pad
+
+        MouseArea {
+            id: help_ma
+            anchors.fill: parent
+            hoverEnabled: true
+        }
+
+        ToolTip {
+            text: qsTr("Ver ayuda")
+            visible: help_ma.containsMouse
+            anchors.centerIn: parent
+        }
+
+        HoverHandler {
+            id: mouse_help
+            acceptedDevices: PointerDevice.Mouse
+            cursorShape: Qt.PointingHandCursor
+        }
     }
 
     function show_definition() {
